@@ -112,7 +112,7 @@ public class Model {
             } else if (operator.equals("/")) {
                 try{
                     number /= fieldNum;
-                } catch (ArithmeticException exp) {
+                } catch (Exception exp) {
                     number = 0;
                 }
                 return;
@@ -301,7 +301,7 @@ public class Model {
                 return;
             } else if (btnTxt.equals("9")) {
                 fieldNum = setNextOperation(fieldNum);
-                if (fieldNum != 0 || fieldTxt.contains(".")) {
+                if (fieldNum != 0 || (fieldNum == 0 && fieldTxt.contains("."))) {
                     fieldTxt = fieldTxt + 9;
                 } else {
                     fieldTxt = "" + 9;
@@ -331,28 +331,28 @@ public class Model {
                 operate(fieldNum);
                 operator = "-";
                 view.getNumberScreen().setText("0");
-                view.getOperatorLabel().setText("_");
+                view.getOperatorLabel().setText("     _");
                 shift = false;
                 return;
             } else if (btnTxt.equals("/")) {
                 operate(fieldNum);
                 operator = "/";
                 view.getNumberScreen().setText("0");
-                view.getOperatorLabel().setText("/");
+                view.getOperatorLabel().setText("     /");
                 shift = false;
                 return;
             } else if (btnTxt.equals("X")) {
                 operate(fieldNum);
                 operator = "*";
                 view.getNumberScreen().setText("0");
-                view.getOperatorLabel().setText("X");
+                view.getOperatorLabel().setText("     X");
                 shift = false;
                 return;
             } else if (btnTxt.equals("=")) {
                 operate(fieldNum);
                 operator = "=";
                 view.getNumberScreen().setText(modifyResult());
-                view.getOperatorLabel().setText("=");
+                view.getOperatorLabel().setText("     =");
                 shift = false;
                 return;
             }
@@ -362,7 +362,7 @@ public class Model {
                 operate(fieldNum);
                 operator = "%";
                 view.getNumberScreen().setText("0");
-                view.getOperatorLabel().setText("%");
+                view.getOperatorLabel().setText("     %");
                 shift = false;
                 return;
             } else if (btnTxt.equals("e")) {
@@ -370,22 +370,30 @@ public class Model {
                 operator = "e";
                 number = Math.exp(number);
                 view.getNumberScreen().setText(modifyResult());
-                view.getOperatorLabel().setText("e");
+                view.getOperatorLabel().setText("     e");
                 shift = false;
                 return;
             } else if (btnTxt.equals("log")) {
                 operate(fieldNum);
                 operator = "log";
-                number = Math.log(number);
+                try {
+                    number = Math.log(number);
+                } catch (Exception exp) {
+                    number = 0;
+                    operator = null;
+                    view.getOperatorLabel().setText("  Error");
+                    delay(1000);
+                    view.getOperatorLabel().setText(" ");
+                }
                 view.getNumberScreen().setText(modifyResult());
-                view.getOperatorLabel().setText("log");
+                view.getOperatorLabel().setText("   log");
                 shift = false;
                 return;
             } else if (btnTxt.equals("^")) {
                 operate(fieldNum);
                 operator = "^";
                 view.getNumberScreen().setText("0");
-                view.getOperatorLabel().setText("^");
+                view.getOperatorLabel().setText("     ^");
                 shift = false;
                 return;
             } else if (btnTxt.equals("sin/cos")) {
@@ -393,11 +401,11 @@ public class Model {
                 operator = "sin/cos";
                 if (shift) {
                     number = Math.cos(number);
-                    view.getOperatorLabel().setText("cos");
+                    view.getOperatorLabel().setText("   cos");
                     shift = false;
                 } else {
                     number = Math.sin(number);
-                    view.getOperatorLabel().setText("sin");
+                    view.getOperatorLabel().setText("   sin");
                 }
                 view.getNumberScreen().setText(modifyResult());
                 return;
@@ -407,11 +415,11 @@ public class Model {
                 if (shift) {
                     try{
                         number = 1/Math.tan(number);
-                        view.getOperatorLabel().setText("cot");
-                    } catch (ArithmeticException exp) {
+                        view.getOperatorLabel().setText("   cot");
+                    } catch (Exception exp) {
                         number = 0;
                         operator = null;
-                        view.getOperatorLabel().setText("Error");
+                        view.getOperatorLabel().setText("  Error");
                         delay(1000);
                         view.getOperatorLabel().setText(" ");
                     }
@@ -419,11 +427,11 @@ public class Model {
                 } else {
                     try {
                         number = Math.tan(number);
-                        view.getOperatorLabel().setText("tan");
-                    } catch (ArithmeticException exp) {
+                        view.getOperatorLabel().setText("   tan");
+                    } catch (Exception exp) {
                         number = 0;
                         operator = null;
-                        view.getOperatorLabel().setText("Error");
+                        view.getOperatorLabel().setText("  Error");
                         delay(1000);
                         view.getOperatorLabel().setText(" ");
                     }
@@ -584,28 +592,28 @@ public class Model {
                 operate(fieldNum);
                 operator = "-";
                 view.getNumberScreen().setText("0");
-                view.getOperatorLabel().setText("_");
+                view.getOperatorLabel().setText("     _");
                 shift = false;
                 return;
             } else if (btnTxt.equals("/")) {
                 operate(fieldNum);
                 operator = "/";
                 view.getNumberScreen().setText("0");
-                view.getOperatorLabel().setText("/");
+                view.getOperatorLabel().setText("     /");
                 shift = false;
                 return;
             } else if (btnTxt.equals("X")) {
                 operate(fieldNum);
                 operator = "*";
                 view.getNumberScreen().setText("0");
-                view.getOperatorLabel().setText("X");
+                view.getOperatorLabel().setText("     X");
                 shift = false;
                 return;
             } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 operate(fieldNum);
                 operator = "=";
                 view.getNumberScreen().setText(modifyResult());
-                view.getOperatorLabel().setText("=");
+                view.getOperatorLabel().setText("     =");
                 shift = false;
                 return;
             }
