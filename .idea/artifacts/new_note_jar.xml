@@ -2,9 +2,6 @@
   <artifact type="jar" name="new note:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/new_note_jar</output-path>
     <root id="archive" name="new note.jar">
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/notes/META-INF/MANIFEST.MF" />
-      </element>
       <element id="module-output" name="new note" />
     </root>
   </artifact>
